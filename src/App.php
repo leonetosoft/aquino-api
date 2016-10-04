@@ -12,8 +12,8 @@ namespace Aquino;
 
 
 class App
-{
-	
+{   
+	define("_APP", dirname(__FILE__));
 	/**
      * Current version
      *
@@ -22,8 +22,8 @@ class App
     const VERSION = '1.0.0';
 
 
-    public function __construct($container = [])
+    public function __construct()
     {
-
+        echo _APP;
     }
 }
