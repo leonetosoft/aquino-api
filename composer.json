@@ -1,5 +1,5 @@
 {
-    "name": "aquino-api",
+    "name": "aquino/aquino-api",
     "type": "library",
     "description": "Framework baseado em Slim framework para criação de API'S",
     "keywords": ["framework","micro","api","router","JWT", "framework php", "php api"],
