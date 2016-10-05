@@ -99,10 +99,7 @@ class ApiModule {
       $callFunc = call_user_func_array(array($class, $paramsCall), $params);
 
       $return;
-      if(empty($callFunc)){
-        $return = $response->withJson(['msg' => "Return api is empty" , 'status' => 500 , 'type' => 'ERROR'])->withStatus(500);
-      }
-      else if($callFunc instanceof Response){
+      if($callFunc instanceof Response){
         $return = $callFunc;
       }
       else if(is_string($callFunc)){
@@ -113,6 +110,8 @@ class ApiModule {
       }
       else if(is_object($callFunc)){
         $return = $response->withJson($callFunc);
+      }else{
+        $return = $response->withJson(['msg' => "Return api is empty" , 'status' => 500 , 'type' => 'ERROR'])->withStatus(500);
       }
 
       return $return;
@@ -139,8 +138,6 @@ class ApiModule {
     }else{
       $conf = $this->getConfig('databaseQueryBuilder', $con_cfg);
     }
-
-    echo $this->container['config'];
     
     $connection = new \Pixie\Connection($conf['driver'], $conf);
     return new \Pixie\QueryBuilder\QueryBuilderHandler($connection);

@@ -78,13 +78,13 @@ class App
             };
         };
 
-        $container['errorHandler'] = function ($c) {
+        /*$container['errorHandler'] = function ($c) {
             return function ($request, $response, $exception) use ($c) {
             return $c['response']
                     ->withStatus(500)
                     ->withJson(['status' => 500 , 'msg' => 'Internal error in api']);
             };
-        };
+        };*/
 
 
         //Load all api routes
