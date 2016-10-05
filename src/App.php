@@ -59,6 +59,34 @@ class App
         //Add Middleware
         $app->add( new ApiModuleMiddleware() );
 
+        //Override the default Not Found Handler
+        $container['notFoundHandler'] = function ($c) {
+            return function ($request, $response) use ($c) {
+                return $c['response']
+                    ->withStatus(404)
+                    ->withJson(['status' => 404 , 'msg' => 'Page not found']);
+            };
+        };
+
+        //Override the default Not Allowed Handler
+        $container['notAllowedHandler'] = function ($c) {
+            return function ($request, $response, $methods) use ($c) {
+                return $c['response']
+                    ->withStatus(405)
+                    ->withHeader('Allow', implode(', ', $methods))
+                    ->withJson(['status' => 404 , 'msg' => ('Method must be one of: ' . implode(', ', $methods))]);
+            };
+        };
+
+        $container['errorHandler'] = function ($c) {
+            return function ($request, $response, $exception) use ($c) {
+            return $c['response']
+                    ->withStatus(500)
+                    ->withJson(['status' => 500 , 'msg' => 'Internal error in api']);
+            };
+        };
+
+
         //Load all api routes
         foreach (glob($this->dirProject . "api/*.php") as $file)
         {
